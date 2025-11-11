@@ -21,8 +21,14 @@ function Button({ variant, text, icon }: ButtonType) {
                 variant === "primary" && primaryStyle,
                 variant === "secondary" && secondaryStyle
             )}>
-            {icon && <img src={icon} />}
-            {text}
+            {(icon && text && (
+                <div className="flex items-center gap-2">
+                    <img src={icon} />
+                    <span>{text}</span>
+                </div>
+            )) ||
+                (icon && <img src={icon} />) ||
+                (text && text)}
         </button>
     )
 }
