@@ -11,25 +11,28 @@ export function meta() {
 
 export default function Quiz() {
     return (
-        <main className="p-5 md:p-10 flex flex-col items-center">
-            <div className="w-full flex items-center text-text-secondary gap-6">
+        <main className="quiz_main">
+            <div className="quiz_header">
                 <Button variant="secondary" icon={LeftArrow} />
-                <span className="text-2xl md:text-4xl">Oxford Word Skills Elementary</span>
+                <span className="quiz_title">Oxford Word Skills Elementary</span>
             </div>
-            <div className="mt-16 bg-surface rounded-primary p-4 md:p-7.5">
-                <div className="text-3xl md:text-[40px]">
+
+            <div className="quiz_card">
+                <div className="quiz_question">
                     <h1>I usually drink a cup of coffee in the __________.</h1>
                 </div>
-                <div className="flex flex-col gap-y-8 mt-[76px]">
+
+                <div className="quiz_options">
                     <Button variant="primary" text="morning" />
                     <Button variant="primary" text="night" />
                     <Button variant="primary" text="lunch" />
                     <Button variant="primary" text="afternoon" />
                 </div>
-                <div className="flex justify-center md:justify-end  mt-[76px]">
-                    <div className="flex gap-x-5.5 items-center">
+
+                <div className="quiz_navigation">
+                    <div className="quiz_navigation_inner">
                         <Button variant="primary" icon={LeftArrow} />
-                        <span className="text-2xl sm:text-[32px]">1 of 10</span>
+                        <span>1 of 10</span>
                         <Button variant="primary" icon={RightArrow} />
                     </div>
                 </div>

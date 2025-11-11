@@ -10,23 +10,25 @@ export function meta() {
 
 export default function Result() {
     return (
-        <main className="p-5 md:p-10 flex flex-col items-center">
-            <div className="w-full flex items-center justify-center md:justify-start text-text-secondary gap-6">
+        <main className="result_main">
+            <div className="result_header">
                 <Button variant="secondary" icon={LeftIcon} text="Go Home" />
             </div>
-            <div className="mt-[90px] flex flex-col gap-y-[90px] items-center ">
-                <h1 className="text-text-secondary text-3xl md:text-5xl">You finished the quiz!</h1>
-                <h2 className="text-success text-3xl md:text-5xl">
-                    Excellent! You’re doing great! 🎉
-                </h2>
-                <div className="flex items-center gap-x-[90px]">
-                    <h3 className="text-text-secondary text-3xl md:text-[40px]">Score</h3>
-                    <h3 className="text-3xl md:text-[40px]">8 / 10</h3>
+
+            <div className="result_content">
+                <h1>You finished the quiz!</h1>
+                <h2>Excellent! You’re doing great! 🎉</h2>
+
+                <div className="result_score">
+                    <h3>Score</h3>
+                    <h3>8 / 10</h3>
                 </div>
-                <div className="flex items-center gap-x-[90px]">
-                    <h3 className="text-text-secondary text-3xl md:text-[40px]">Percentage</h3>
-                    <h3 className="text-3xl md:text-[40px]">80%</h3>
+
+                <div className="result_percentage">
+                    <h3>Percentage</h3>
+                    <h3>80%</h3>
                 </div>
+
                 <Button variant="secondary" text="Try Again" />
             </div>
         </main>
