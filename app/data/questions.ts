@@ -2,10 +2,12 @@ export const QUIZZES = [
     {
         category_name: "English Vocabulary",
         id: 1,
+        slug: "english-vocabulary",
         items: [
             {
                 id: 1,
                 title: "Oxford Word Skills Elementary",
+                slug: "oxford-word-skills-elementary",
                 description:
                     "These are the words I encountered in this book whose meanings I did not know. In this set, the front of the cards contains the word along with simple, short sentences in which those words are used, and the back of the cards only contains the meaning of the target word.",
                 points: 100,
@@ -83,6 +85,7 @@ export const QUIZZES = [
             {
                 id: 2,
                 title: "Job Interview Vocabulary",
+                slug: "job-interview-vocabulary",
                 description:
                     "Common words and expressions you might hear or use in a job interview setting. These questions help you understand professional vocabulary and phrases used in interviews.",
                 points: 120,
@@ -163,16 +166,19 @@ export const QUIZZES = [
     {
         category_name: "JavaScript Fundamentals",
         id: 2,
+        slug: "javaScript-fundamentals",
         items: [
             {
                 id: 1,
                 title: "Basic JavaScript Concepts",
+                slug: "basic-javaScript-concepts",
                 description:
                     "Test your understanding of core JavaScript concepts such as variables, data types, loops, and functions.",
                 points: 100,
                 levels: "B1 (Intermediate)",
                 questionCount: 10,
                 author: "Arman Dezfuli",
+
                 questions: [
                     {
                         id: 1,
@@ -266,6 +272,7 @@ export const QUIZZES = [
             {
                 id: 2,
                 title: "JavaScript Interview Questions",
+                slug: "javaScript-interview-questions",
                 description:
                     "Common JavaScript interview questions covering closures, scope, and async programming.",
                 points: 150,

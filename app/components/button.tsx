@@ -4,11 +4,13 @@ type ButtonType = {
     variant: "secondary" | "primary"
     text?: string
     icon?: string
+    onClick?: () => void
 }
 
-function Button({ variant, text, icon }: ButtonType) {
+function Button({ variant, text, icon, onClick }: ButtonType) {
     return (
         <button
+            onClick={onClick}
             className={clsx(
                 "btn-base",
                 variant === "primary" && "btn-primary",

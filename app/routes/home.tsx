@@ -22,7 +22,13 @@ export default function Home() {
                     </div>
                     <div className="category_grid">
                         {category.items.map((quiz) => (
-                            <Category_Card key={quiz.id} {...quiz} />
+                            <Category_Card
+                                key={quiz.id}
+                                {...quiz}
+                                categoryId={category.id}
+                                categorySlug={category.slug}
+                                quizSlug={quiz.slug}
+                            />
                         ))}
                     </div>
                 </div>
