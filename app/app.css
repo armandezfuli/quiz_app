@@ -26,7 +26,7 @@ body {
 @layer components {
     /* Category Card  */
     .category_card {
-        @apply p-5 rounded-[var(--radius-primary)] bg-surface flex flex-col gap-y-5;
+        @apply p-5 rounded-[var(--radius-primary)] bg-surface flex flex-col justify-between gap-y-5;
     }
 
     .category_card div > h3 {

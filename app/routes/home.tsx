@@ -1,5 +1,6 @@
 import Category_Card from "~/components/category_card"
 import type { Route } from "./+types/home"
+import { QUIZZES } from "~/data/questions"
 
 export function meta({}: Route.MetaArgs) {
     return [
@@ -14,33 +15,18 @@ export default function Home() {
             <div className="logo_app">
                 <h1>Quiz App</h1>
             </div>
-
-            <div className="category_bar">
-                <div className="category_title">
-                    <h2>English Vocabulary</h2>
+            {QUIZZES.map((category) => (
+                <div className="category_bar" key={category.id}>
+                    <div className="category_title">
+                        <h2>{category.category_name}</h2>
+                    </div>
+                    <div className="category_grid">
+                        {category.items.map((quiz) => (
+                            <Category_Card key={quiz.id} {...quiz} />
+                        ))}
+                    </div>
                 </div>
-                <div className="category_grid">
-                    <Category_Card />
-                    <Category_Card />
-                    <Category_Card />
-                    <Category_Card />
-                    <Category_Card />
-                    <Category_Card />
-                </div>
-            </div>
-            <div className="category_bar">
-                <div className="category_title">
-                    <h2>English Vocabulary</h2>
-                </div>
-                <div className="category_grid">
-                    <Category_Card />
-                    <Category_Card />
-                    <Category_Card />
-                    <Category_Card />
-                    <Category_Card />
-                    <Category_Card />
-                </div>
-            </div>
+            ))}
         </main>
     )
 }
