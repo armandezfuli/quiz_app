@@ -61,6 +61,13 @@ body {
     .btn-content {
         @apply flex items-center gap-2;
     }
+    .btn-disabled {
+        @apply opacity-50 cursor-not-allowed bg-surface/50 text-text-secondary/70;
+        pointer-events: none;
+    }
+    .btn-selected {
+        @apply bg-primary hover:bg-primary/70 border-none;
+    }
 
     /* Home page */
     .logo_app h1 {

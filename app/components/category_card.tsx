@@ -5,16 +5,6 @@ import LightbulbIcon from "../assets/icons/ic_outline-lightbulb.svg"
 import Button from "./button"
 import { useNavigate } from "react-router"
 
-// type CategoryCardProps = {
-//     title: string
-//     description: string
-//     points: number
-//     levels: string
-//     questionCount: number
-//     author: string
-//     id: number
-//     categoryId: number
-// }
 
 type CategoryCardProps = {
     id: number
