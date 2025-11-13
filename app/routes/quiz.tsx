@@ -26,17 +26,35 @@ export default function Quiz() {
 
     if (!quiz) return <p>Quiz not found!</p>
 
+    function highlightText(text: string) {
+        const parts = text.split(/\$\$(.*?)\$\$/g)
+        return parts.map((part, index) =>
+            index % 2 === 1 ? (
+                <span className="text-text-secondary" key={index}>
+                    {part}
+                </span>
+            ) : (
+                part
+            )
+        )
+    }
+
     const question = quiz.questions[currentQuestionIndex]
+
     return (
         <main className="quiz_main">
             <div className="quiz_header">
-                <Button variant="secondary" icon={LeftArrow} />
+                <Button
+                    variant="secondary"
+                    icon={LeftArrow}
+                    onClick={() => navigate("/")}
+                />
                 <span className="quiz_title">{quiz.title}</span>
             </div>
 
             <div className="quiz_card">
                 <div className="quiz_question">
-                    <h1>{question.question}</h1>
+                    <h1>{highlightText(question.question)}</h1>
                 </div>
 
                 <div className="quiz_options">
