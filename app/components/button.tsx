@@ -1,15 +1,7 @@
 import clsx from "clsx"
+import type { ButtonType } from "~/types"
 
-type ButtonType = {
-    variant: "secondary" | "primary"
-    text?: string
-    icon?: string
-    onClick?: () => void
-    disabled?: boolean
-    className?: string
-}
-
-function Button({ variant, text, icon, onClick, disabled, className  }: ButtonType) {
+function Button({ variant, text, icon, onClick, disabled, className }: ButtonType) {
     return (
         <button
             onClick={onClick}

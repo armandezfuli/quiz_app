@@ -1,4 +1,6 @@
-export const QUIZZES = [
+import type { QuizCategory } from "~/types" 
+
+export const QUIZZES : QuizCategory[] = [
     {
         category_name: "English Vocabulary",
         id: 1,

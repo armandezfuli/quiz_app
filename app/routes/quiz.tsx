@@ -4,6 +4,8 @@ import RightArrow from "../assets/icons/Right arrow.svg"
 import { useParams, useNavigate } from "react-router"
 import { QUIZZES } from "~/data/questions"
 import { useState } from "react"
+import type { QuizItem } from "~/types"
+import highlightText from "~/utils/highlightText"
 
 export function meta() {
     return [
@@ -22,23 +24,12 @@ export default function Quiz() {
     }>()
     const navigate = useNavigate()
     const category = QUIZZES.find((c) => c.slug === categorySlug)
-    const quiz = category?.items.find((q) => q.slug === quizSlug)
+    const quiz: QuizItem | undefined = category?.items.find((q) => q.slug === quizSlug)
 
     if (!quiz) return <p>Quiz not found!</p>
 
-    function highlightText(text: string) {
-        const parts = text.split(/\$\$(.*?)\$\$/g)
-        return parts.map((part, index) =>
-            index % 2 === 1 ? (
-                <span className="text-text-secondary" key={index}>
-                    {part}
-                </span>
-            ) : (
-                part
-            )
-        )
-    }
-
+    
+    if (!quiz.questions[currentQuestionIndex]) return null
     const question = quiz.questions[currentQuestionIndex]
 
     return (

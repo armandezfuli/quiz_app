@@ -4,27 +4,9 @@ import RenameIcon from "../assets/icons/ic_baseline-drive-file-rename-outline.sv
 import LightbulbIcon from "../assets/icons/ic_outline-lightbulb.svg"
 import Button from "./button"
 import { useNavigate } from "react-router"
+import type { CategoryCardProps } from "~/types"
 
 
-type CategoryCardProps = {
-    id: number
-    categoryId: number
-    title: string
-    description: string
-    points: number
-    levels: string
-    questionCount: number
-    author: string
-    questions: {
-        id: number
-        question: string
-        options: string[]
-        correctAnswer: string
-    }[]
-    slug: string
-    categorySlug?: string
-    quizSlug?: string
-}
 function Category_Card({
     title,
     description,
@@ -49,12 +31,10 @@ function Category_Card({
             <div>
                 <p>{description}</p>
             </div>
-
             <div className="icon-text">
                 <img src={ScoreIcon} />
                 <span className="text-xl">{points} Points</span>
             </div>
-
             <div className="icon-text">
                 <img src={VerificationIcon} />
                 <span className="text-xl">{levels}</span>
