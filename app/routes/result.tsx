@@ -1,7 +1,9 @@
 import LeftIcon from "../assets/icons/Left arrow.svg"
 import Button from "~/components/button"
 import { useLocation, useParams, useNavigate } from "react-router"
-import { QUIZZES } from "~/data/questions"
+import { useState, useEffect } from "react"
+import api from "~/api/axios"
+import type { QuizItem, QuizCategory } from "~/types"
 
 export function meta() {
     return [
@@ -11,17 +13,51 @@ export function meta() {
 }
 
 export default function Result() {
+    const [quiz, setQuiz] = useState<QuizItem | null>(null)
+    const [loading, setLoading] = useState(true)
+    const [error, setError] = useState<string | null>(null)
+
     const location = useLocation()
+
     const navigate = useNavigate()
     const { categorySlug, quizSlug } = useParams<{
         categorySlug: string
         quizSlug: string
     }>()
+
+    useEffect(() => {
+        const fetchQuiz = async () => {
+            try {
+                const res = await api.get("/quizzes")
+                const categories: QuizCategory[] = res.data
+
+                const category = categories.find((c) => c.slug === categorySlug)
+                if (!category) {
+                    setError("Category not found")
+                    return
+                }
+
+                const foundQuiz = category.items.find((q) => q.slug === quizSlug)
+                if (!foundQuiz) {
+                    setError("Quiz not found")
+                    return
+                }
+
+                setQuiz(foundQuiz)
+            } catch (err) {
+                setError("Failed to fetch quiz")
+            } finally {
+                setLoading(false)
+            }
+        }
+
+        fetchQuiz()
+    }, [categorySlug, quizSlug])
+
     const answers: string[] = location.state?.answers || []
 
-    const category = QUIZZES.find((c) => c.slug === categorySlug)
-    const quiz = category?.items.find((q) => q.slug === quizSlug)
-
+    if (loading) return <p>Loading...</p>
+    if (error) return <p>{error}</p>
     if (!quiz) return <p>Quiz not found!</p>
 
     const correctCount = quiz.questions.reduce((count, question, index) => {
