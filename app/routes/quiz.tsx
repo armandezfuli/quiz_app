@@ -2,10 +2,9 @@ import Button from "~/components/button"
 import LeftArrow from "../assets/icons/Left arrow.svg"
 import RightArrow from "../assets/icons/Right arrow.svg"
 import { useParams, useNavigate } from "react-router"
-import api from "~/api/axios"
-import { useState, useEffect } from "react"
-import type { QuizItem } from "~/types"
+import { useState } from "react"
 import highlightText from "~/utils/highlightText"
+import { useQuiz } from "~/hooks/useQuiz"
 
 export function meta() {
     return [
@@ -15,9 +14,6 @@ export function meta() {
 }
 
 export default function Quiz() {
-    const [quiz, setQuiz] = useState<QuizItem | null>(null)
-    const [loading, setLoading] = useState<boolean>(true)
-    const [error, setError] = useState<string | null>(null)
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
     const [answers, setAnswers] = useState<string[]>([])
 
@@ -26,32 +22,7 @@ export default function Quiz() {
         quizSlug: string
     }>()
 
-    useEffect(() => {
-        const fetchQuiz = async () => {
-            try {
-                const res = await api.get(`/quizzes`)
-                const categories = res.data
-
-                const category = categories.find((c: any) => c.slug === categorySlug)
-                if (!category) {
-                    setError("Category not found")
-                    return
-                }
-                const foundQuiz = category.items.find((q: any) => q.slug === quizSlug)
-                if (!foundQuiz) {
-                    setError("Quiz not found")
-                    return
-                }
-
-                setQuiz(foundQuiz)
-            } catch (err) {
-                setError("Failed to fetch quiz")
-            } finally {
-                setLoading(false)
-            }
-        }
-        fetchQuiz()
-    }, [quizSlug, categorySlug])
+    const { quiz, loading, error } = useQuiz(categorySlug!, quizSlug!)
 
     const navigate = useNavigate()
 

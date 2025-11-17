@@ -1,8 +1,7 @@
 import Category_Card from "~/components/category_card"
 import type { Route } from "./+types/home"
-import { useState, useEffect } from "react"
-import api from "~/api/axios"
-import type { QuizItem, QuizCategory } from "~/types"
+import type { QuizItem } from "~/types"
+import { useQuizzes } from "~/hooks/useQuizzes"
 
 export function meta({}: Route.MetaArgs) {
     return [
@@ -12,23 +11,7 @@ export function meta({}: Route.MetaArgs) {
 }
 
 export default function Home() {
-    const [quizzes, setQuizzes] = useState<QuizCategory[]>([])
-    const [loading, setLoading] = useState(true)
-    const [error, setError] = useState<string | null>(null)
-
-    useEffect(() => {
-        const fetchQuizzes = async () => {
-            try {
-                const res = await api.get("/quizzes")
-                setQuizzes(res.data)
-            } catch (err) {
-                setError("Failed to fetch quizzes")
-            } finally {
-                setLoading(false)
-            }
-        }
-        fetchQuizzes()
-    }, [])
+    const { quizzes, loading, error } = useQuizzes()
 
     if (loading) return <p>Loading...</p>
     if (error) return <p>{error}</p>
