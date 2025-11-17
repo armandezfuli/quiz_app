@@ -1,5 +1,6 @@
 import clsx from "clsx"
 import type { ButtonType } from "~/types"
+import { memo } from "react"
 
 function Button({ variant, text, icon, onClick, disabled, className }: ButtonType) {
     return (
@@ -23,4 +24,4 @@ function Button({ variant, text, icon, onClick, disabled, className }: ButtonTyp
     )
 }
 
-export default Button
+export default memo(Button)
