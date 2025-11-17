@@ -38,3 +38,9 @@ export type ButtonType = {
     disabled?: boolean
     className?: string
 }
+
+export type IconTextProps = {
+    icon: string
+    text: string | number
+    suffix?: string
+}

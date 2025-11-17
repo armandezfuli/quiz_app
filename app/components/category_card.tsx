@@ -5,7 +5,8 @@ import LightbulbIcon from "../assets/icons/ic_outline-lightbulb.svg"
 import Button from "./button"
 import { useNavigate } from "react-router"
 import type { CategoryCardProps } from "~/types"
-
+import { memo, useCallback } from "react"
+import IconText from "./IconText"
 
 function Category_Card({
     title,
@@ -19,9 +20,9 @@ function Category_Card({
 }: CategoryCardProps) {
     const navigate = useNavigate()
 
-    const handleStart = () => {
+    const handleStart = useCallback(() => {
         navigate(`/quiz/${categorySlug}/${quizSlug}`)
-    }
+    }, [navigate, categorySlug, quizSlug])
 
     return (
         <div className="category_card">
@@ -31,25 +32,13 @@ function Category_Card({
             <div>
                 <p>{description}</p>
             </div>
-            <div className="icon-text">
-                <img src={ScoreIcon} />
-                <span className="text-xl">{points} Points</span>
-            </div>
-            <div className="icon-text">
-                <img src={VerificationIcon} />
-                <span className="text-xl">{levels}</span>
-            </div>
-            <div className="icon-text">
-                <img src={LightbulbIcon} />
-                <span className="text-xl">{questionCount} Questions</span>
-            </div>
-            <div className="icon-text">
-                <img src={RenameIcon} />
-                <span className="text-xl">{author}</span>
-            </div>
+            <IconText icon={ScoreIcon} text={points} suffix="Points" />
+            <IconText icon={VerificationIcon} text={levels} />
+            <IconText icon={LightbulbIcon} text={questionCount} suffix="Questions" />
+            <IconText icon={RenameIcon} text={author} />
             <Button variant="primary" text="Start" onClick={handleStart} />
         </div>
     )
 }
 
-export default Category_Card
+export default memo(Category_Card)
