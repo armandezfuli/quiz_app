@@ -1,7 +1,7 @@
 import Category_Card from "~/components/category_card"
 import type { Route } from "./+types/home"
-import type { QuizItem } from "~/types"
 import { useQuizzes } from "~/hooks/useQuizzes"
+import { useMemo } from "react"
 
 export function meta({}: Route.MetaArgs) {
     return [
@@ -13,29 +13,27 @@ export function meta({}: Route.MetaArgs) {
 export default function Home() {
     const { quizzes, loading, error } = useQuizzes()
 
+    const categoryElements = useMemo(() => {
+        return quizzes.map((category) => (
+            <div className="category_bar" key={category.id}>
+                <div className="category_title">
+                    <h2>{category.category_name}</h2>
+                </div>
+                <div className="category_grid">
+                    {category.items.map((quiz) => (
+                        <Category_Card
+                            key={quiz.id}
+                            {...quiz}
+                            categorySlug={category.slug}
+                            quizSlug={quiz.slug}
+                            categoryId={category.id}
+                        />
+                    ))}
+                </div>
+            </div>
+        ))
+    }, [quizzes])
     if (loading) return <p>Loading...</p>
     if (error) return <p>{error}</p>
-
-    return (
-        <main>
-            {quizzes.map((category) => (
-                <div className="category_bar" key={category.id}>
-                    <div className="category_title">
-                        <h2>{category.category_name}</h2>
-                    </div>
-                    <div className="category_grid">
-                        {category.items.map((quiz: QuizItem) => (
-                            <Category_Card
-                                key={quiz.id}
-                                {...quiz}
-                                categorySlug={category.slug}
-                                quizSlug={quiz.slug}
-                                categoryId={category.id}
-                            />
-                        ))}
-                    </div>
-                </div>
-            ))}
-        </main>
-    )
+    return <main>{categoryElements}</main>
 }
