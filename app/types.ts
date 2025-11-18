@@ -44,3 +44,13 @@ export type IconTextProps = {
     text: string | number
     suffix?: string
 }
+
+export type QuestionCardProps = {
+    question: {
+        question: string
+        options: string[]
+    }
+    questionIndex: number
+    answers: string[]
+    setAnswer: (index: number, value: string) => void
+}

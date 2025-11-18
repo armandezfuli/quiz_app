@@ -2,9 +2,11 @@ import Button from "~/components/button"
 import LeftArrow from "../assets/icons/Left arrow.svg"
 import RightArrow from "../assets/icons/Right arrow.svg"
 import { useParams, useNavigate } from "react-router"
-import { useState } from "react"
 import highlightText from "~/utils/highlightText"
 import { useQuiz } from "~/hooks/useQuiz"
+import { useAnswers } from "~/hooks/useAnswers"
+import { useQuizNavigation } from "~/hooks/useQuizNavigation"
+import QuestionCard from "~/components/QuestionCard"
 
 export function meta() {
     return [
@@ -14,17 +16,18 @@ export function meta() {
 }
 
 export default function Quiz() {
-    const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
-    const [answers, setAnswers] = useState<string[]>([])
-
     const { categorySlug, quizSlug } = useParams<{
         categorySlug: string
         quizSlug: string
     }>()
-
     const { quiz, loading, error } = useQuiz(categorySlug!, quizSlug!)
-
+    const { answers, setAnswer } = useAnswers(quiz?.questions.length ?? 0)
     const navigate = useNavigate()
+    const {
+        currentIndex: currentQuestionIndex,
+        next,
+        prev,
+    } = useQuizNavigation(quiz?.questions.length ?? 0)
 
     if (loading) return <p>Loading...</p>
     if (error) return <p>{error}</p>
@@ -49,45 +52,18 @@ export default function Quiz() {
                 <div className="quiz_question">
                     <h1>{highlightText(question.question)}</h1>
                 </div>
-
-                <div className="quiz_options">
-                    {question.options.map((option) => (
-                        <Button
-                            key={option}
-                            variant="primary"
-                            text={option}
-                            onClick={() => {
-                                setAnswers((prev) => {
-                                    const newAnswers = [...prev]
-                                    while (newAnswers.length <= currentQuestionIndex) {
-                                        newAnswers.push("")
-                                    }
-                                    newAnswers[currentQuestionIndex] = option
-                                    return newAnswers
-                                })
-                            }}
-                            className={
-                                answers[currentQuestionIndex] === option
-                                    ? "btn-selected"
-                                    : ""
-                            }
-                        />
-                    ))}
-                </div>
-
+                <QuestionCard
+                    question={question}
+                    questionIndex={currentQuestionIndex}
+                    answers={answers}
+                    setAnswer={setAnswer}
+                />
                 <div className="quiz_navigation">
                     <div className="quiz_navigation_inner">
-                        <Button
-                            variant="primary"
-                            icon={LeftArrow}
-                            onClick={() =>
-                                setCurrentQuestionIndex((i) => Math.max(i - 1, 0))
-                            }
-                        />
+                        <Button variant="primary" icon={LeftArrow} onClick={prev} />
                         <span>
                             {currentQuestionIndex + 1} of {quiz.questions.length}
                         </span>
-
                         <Button
                             variant="primary"
                             icon={
@@ -101,13 +77,12 @@ export default function Quiz() {
                                     : undefined
                             }
                             onClick={() => {
-                                if (currentQuestionIndex < quiz.questions.length - 1) {
-                                    setCurrentQuestionIndex((i) => i + 1)
-                                } else {
+                                if (currentQuestionIndex < quiz.questions.length - 1)
+                                    next()
+                                else
                                     navigate(`/result/${categorySlug}/${quizSlug}`, {
                                         state: { answers },
                                     })
-                                }
                             }}
                             disabled={!answers[currentQuestionIndex]}
                         />
