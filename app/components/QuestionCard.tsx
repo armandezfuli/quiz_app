@@ -1,7 +1,8 @@
+import { memo } from "react"
 import Button from "./button"
 import type { QuestionCardProps } from "~/types"
 
-export default function QuestionCard({
+function QuestionCard({
     question,
     questionIndex,
     answers,
@@ -21,3 +22,5 @@ export default function QuestionCard({
         </div>
     )
 }
+
+export default memo(QuestionCard)

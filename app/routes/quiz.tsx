@@ -20,22 +20,22 @@ export default function Quiz() {
         categorySlug: string
         quizSlug: string
     }>()
-    const { quiz, loading, error } = useQuiz(categorySlug!, quizSlug!)
-    const { answers, setAnswer } = useAnswers(quiz?.questions.length ?? 0)
     const navigate = useNavigate()
+
+    const { quiz, loading, error } = useQuiz(categorySlug!, quizSlug!)
+    const questionCount = quiz?.questions.length ?? 0
+    const { answers, setAnswer } = useAnswers(questionCount)
     const {
         currentIndex: currentQuestionIndex,
         next,
         prev,
-    } = useQuizNavigation(quiz?.questions.length ?? 0)
+    } = useQuizNavigation(questionCount)
 
     if (loading) return <p>Loading...</p>
     if (error) return <p>{error}</p>
     if (!quiz) return <p>Quiz not found</p>
 
     const question = quiz.questions[currentQuestionIndex]
-
-    if (!quiz.questions[currentQuestionIndex]) return null
 
     return (
         <main className="quiz_main">
