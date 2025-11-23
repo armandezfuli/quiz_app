@@ -11,29 +11,29 @@ export function meta({}: Route.MetaArgs) {
 }
 
 export default function Home() {
-    const { quizzes, loading, error } = useQuizzes()
+    const { data: quizzes, isLoading, isError, error } = useQuizzes()
 
-    const categoryElements = useMemo(() => {
-        return quizzes.map((category) => (
-            <div className="category_bar" key={category.id}>
-                <div className="category_title">
-                    <h2>{category.category_name}</h2>
-                </div>
-                <div className="category_grid">
-                    {category.items.map((quiz) => (
-                        <Category_Card
-                            key={quiz.id}
-                            {...quiz}
-                            categorySlug={category.slug}
-                            quizSlug={quiz.slug}
-                            categoryId={category.id}
-                        />
-                    ))}
-                </div>
+    if (isLoading) return <p>Loading...</p>
+    if (isError) return <p>{(error as Error).message}</p>
+
+    const categoryElements = quizzes?.map((category) => (
+        <div className="category_bar" key={category.id}>
+            <div className="category_title">
+                <h2>{category.category_name}</h2>
             </div>
-        ))
-    }, [quizzes])
-    if (loading) return <p>Loading...</p>
-    if (error) return <p>{error}</p>
+            <div className="category_grid">
+                {category.items.map((quiz) => (
+                    <Category_Card
+                        key={quiz.id}
+                        {...quiz}
+                        categorySlug={category.slug}
+                        quizSlug={quiz.slug}
+                        categoryId={category.id}
+                    />
+                ))}
+            </div>
+        </div>
+    ))
+
     return <main>{categoryElements}</main>
 }
